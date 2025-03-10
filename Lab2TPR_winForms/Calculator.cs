@@ -64,7 +64,7 @@ class Calculator
                     {
                         for (int i = 0; i < conditions; i++)
                         {
-                            sum += Convert.ToDouble(results.Rows[i][n - 1]) * Convert.ToDouble(s.Rows[j][i]); //добавляем к ожидаемой прибыли максимальные прибыли с прошлых итераций и умножаем их на вероятности текущей стратегии (я час сидел и так и не понял, почему именно так, спасите
+                            sum += Convert.ToDouble(results.Rows[i][n - 1]) * Convert.ToDouble(s.Rows[j][i]); //добавляем к ожидаемой прибыли максимальные прибыли с прошлых итераций и умножаем их на вероятности текущей стратегии (я час сидел и так и не понял, почему именно так, спасите, XDXDXD, ну сдали и Бог с ним
                         }
                     }
                     if (sum > Convert.ToDouble(results.Rows[j][n]))

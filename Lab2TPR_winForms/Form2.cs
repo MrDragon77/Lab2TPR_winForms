@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Lab1TPR_winForms
+namespace Lab2TPR_winForms
 {
+    //Form2 - форма для ввода сложных параметров
+    //конкретно здесь вводятся данные об исходных, промежуточных и конечных состояниях в соответствующие таблицы
     public partial class Form2 : Form
     {
         public DataSet datasetTemp;
@@ -27,35 +29,56 @@ namespace Lab1TPR_winForms
             numericUpDown_tableID.Minimum = 1;
         }
 
-        private void numericUpDown_tableID_ValueChanged(object sender, EventArgs e)
-        {
-            dataGridView_strategy.DataSource = datasetTemp.Tables["s" + numericUpDown_tableID.Value.ToString()];
-            dataGridView_dohod.DataSource = datasetTemp.Tables["d" + numericUpDown_tableID.Value.ToString()];
-            dataGridView_strategy.Update();
-            dataGridView_dohod.Update();
-        }
-
         private void Form2_Load(object sender, EventArgs e)
         {
-            dataGridView_strategy.DataSource = datasetTemp.Tables["s1"];
-            dataGridView_dohod.DataSource = datasetTemp.Tables["d1"];
+            dataGridView_table_I.DataSource = datasetTemp.Tables[tablesNames.table_I + "1"];
+            dataGridView_table_P.DataSource = datasetTemp.Tables[tablesNames.table_P + "1"];
+            dataGridView_table_K.DataSource = datasetTemp.Tables[tablesNames.table_K + "1"];
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void numericUpDown_tableID_ValueChanged(object sender, EventArgs e)
+        {
+            dataGridView_table_I.DataSource = datasetTemp.Tables[tablesNames.table_I + numericUpDown_tableID.Value.ToString()];
+            dataGridView_table_P.DataSource = datasetTemp.Tables[tablesNames.table_P + numericUpDown_tableID.Value.ToString()];
+            dataGridView_table_K.DataSource = datasetTemp.Tables[tablesNames.table_K + numericUpDown_tableID.Value.ToString()];
+            dataGridView_table_I.Update();
+            dataGridView_table_P.Update();
+            dataGridView_table_K.Update();
+        }
+
+        private void button_SaveChanges_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void dataGridView_strategy_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView_table_I_SelectionChanged(object sender, EventArgs e)
         {
-            dataGridView_strategy.Update();
+            for (int i = 0; i < dataGridView_table_I.Rows.Count; i++)
+            {
+                dataGridView_table_I.Rows[i].HeaderCell.Value = "И" + (i+1).ToString();
+            }
+            dataGridView_table_I.Update();
         }
 
-        private void dataGridView_dohod_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView_table_P_SelectionChanged(object sender, EventArgs e)
         {
-            dataGridView_dohod.Update();
+            for (int i = 0; i < dataGridView_table_P.Rows.Count; i++)
+            {
+                dataGridView_table_P.Rows[i].HeaderCell.Value = "П" + (i+1).ToString();
+            }
+            dataGridView_table_P.Update();
         }
+
+        private void dataGridView_table_K_SelectionChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView_table_K.Rows.Count; i++)
+            {
+                dataGridView_table_K.Rows[i].HeaderCell.Value = "К" + (i+1).ToString();
+            }
+            dataGridView_table_K.Update();
+        }
+
 
         private void button_Graph_Click(object sender, EventArgs e)
         {
@@ -64,5 +87,7 @@ namespace Lab1TPR_winForms
             MainForm GraphForm = new MainForm(datasetTemp.Tables["s" + numericUpDown_tableID.Value.ToString()]);
             GraphForm.ShowDialog();
         }
+
+
     }
 }

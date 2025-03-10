@@ -9,8 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Lab1TPR_winForms
+namespace Lab2TPR_winForms
 {
+    //Form3 - форма вывода результатов (по сути вообще не менял с первой лабы, она просто принимает DataTable от этапа вычислений и выводит её)
     public partial class Form3 : Form
     {
         public DataTable datasetResult;

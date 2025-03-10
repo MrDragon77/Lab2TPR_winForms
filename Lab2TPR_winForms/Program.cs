@@ -1,4 +1,4 @@
-namespace Lab1TPR_winForms
+namespace Lab2TPR_winForms
 {
     internal static class Program
     {

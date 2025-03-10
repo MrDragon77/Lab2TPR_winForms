@@ -1,14 +1,18 @@
 using System.Data;
 
-namespace Lab1TPR_winForms
+namespace Lab2TPR_winForms
 {
+    //Form1 - главная форма, используется для ввода простых параметров и нажатия на кнопки открытия форм для ввода сложных параметров
+    //а также для сохранения данных в файл и загрузки их из файла
     public partial class Form1 : Form
     {
-        DataSet dataset;
+        DataSet dataset; //will have 5 tables
         Calculator calculator;
-        bool datasetCreated = false;
-        int savedStrategyNum = 0;
-        int savedConditionNum = 0;
+        bool isDatasetCreated = false;
+        bool isBindTablesCreated = false; //tables 
+        int savedResourceNum = 0;
+        //int savedStrategyNum = 0; //not used
+        //int savedConditionNum = 0; //not used
         public Form1()
         {
             InitializeComponent();
@@ -21,23 +25,22 @@ namespace Lab1TPR_winForms
 
         }
 
-        private void buttonEditMarix_Click(object sender, EventArgs e)
+        private void buttonEditForm2_Click(object sender, EventArgs e)
         {
             //|| savedStrategyNums != Int32.Parse(textBox_strategyNum.Text)
             bool isNeedToCreateDataset = false;
-            if (!datasetCreated)
+            if (!isDatasetCreated)
             {
                 isNeedToCreateDataset = true;
             }
             else
             {
-                if (savedStrategyNum != Decimal.ToInt32(nud_strategyNum.Value) || savedConditionNum != Decimal.ToInt32(nud_conditionNum.Value))
+                if (savedResourceNum != Decimal.ToInt32(nud_resourceNum.Value))
                 {
-                    DialogResult result = MessageBox.Show("В кеше уже есть сохраненная матрица. \nДа - загрузить ее из кеша.\nНет - Создать новую матрицу", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show("В кеше уже есть сохраненные списки. \nДа - загрузить их из кеша.\nНет - Создать новые списки", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
-                        nud_strategyNum.Value = Convert.ToDecimal(savedStrategyNum);
-                        nud_conditionNum.Value = Convert.ToDecimal(savedConditionNum);
+                        nud_resourceNum.Value = Convert.ToDecimal(savedResourceNum);
                         isNeedToCreateDataset = false;
                     }
                     else if (result == DialogResult.No)
@@ -49,38 +52,40 @@ namespace Lab1TPR_winForms
 
             if (isNeedToCreateDataset)
             {
-                int strategyNum = Decimal.ToInt32(nud_strategyNum.Value);
-                int conditionNum = Decimal.ToInt32(nud_conditionNum.Value);
-                savedStrategyNum = strategyNum;
-                savedConditionNum = conditionNum;
+                int resourceNum = Decimal.ToInt32(nud_resourceNum.Value);
+                //int conditionNum = Decimal.ToInt32(nud_conditionNum.Value);
+                savedResourceNum = resourceNum;
                 dataset = new DataSet();
-                for (int i = 1; i <= strategyNum; i++)
+                for (int i = 1; i <= resourceNum; i++)
                 {
-                    DataTable strategy = new DataTable("s" + i.ToString());
-                    for (int j = 0; j < conditionNum; j++)
-                    {
-                        strategy.Columns.Add("");
-                        strategy.Rows.Add("");
-                    }
+                    DataTable I = new DataTable(tablesNames.table_I + i.ToString()); //таблица инициирующих событий
+                    I.Columns.Add("Название"); //колонка 1 для названия инициирующего события
+                    I.Columns.Add("Вероятность"); //колонка 2 для вероятности возникновения инициирующего события
+                    I.Rows.Add("", "");
 
-                    DataTable dohod = new DataTable("d" + i.ToString());
-                    for (int j = 0; j < conditionNum; j++)
-                    {
-                        dohod.Columns.Add("");
-                        dohod.Rows.Add("");
-                    }
+                    DataTable P = new DataTable(tablesNames.table_P + i.ToString()); //таблица промежуточных событий
+                    P.Columns.Add("Название"); //колонка 1 для названия инициирующего события
+                    P.Rows.Add("");
 
-                    dataset.Tables.Add(strategy);
-                    dataset.Tables.Add(dohod);
+                    DataTable K = new DataTable(tablesNames.table_K + i.ToString()); //таблица конечных событий
+                    K.Columns.Add("Название"); //колонка 1 для названия инициирующего события
+                    K.Columns.Add("Потери"); //колонка 2 для вероятности возникновения инициирующего события
+                    K.Rows.Add("", "");
+
+                    dataset.Tables.Add(I);
+                    dataset.Tables.Add(P);
+                    dataset.Tables.Add(K);
                 }
-                datasetCreated = true;
+                isDatasetCreated = true;
+                isBindTablesCreated = false;
             }
-            //int tablesNumerator = 1;
-            using (Form2 form2 = new Form2(dataset, savedStrategyNum))
+
+            using (Form2 form2 = new Form2(dataset, savedResourceNum)) //открываем Form2 чтобы редактировать списки событий
             {
                 if (form2.ShowDialog() == DialogResult.OK)
                 {
                     dataset = form2.datasetTemp;
+                    isBindTablesCreated = false;
                 }
 
             }
@@ -99,21 +104,28 @@ namespace Lab1TPR_winForms
                 MessageBox.Show("Файл с таким именем уже существует");
                 return;
             }
-            if (dataset.Tables.Contains("state"))
+            if (!isDatasetCreated)
             {
-                dataset.Tables.Remove("state");
+                MessageBox.Show("Нечего сохранять. Сначала создайте списки и заполните их данными.");
+                return;
             }
-            DataTable stateTable = new DataTable("state"); //название технической таблицы state
-            stateTable.Columns.Add("strategyNum", typeof(int));
-            stateTable.Columns.Add("conditionNum", typeof(int));
-            stateTable.Columns.Add("stepNum", typeof(int));
-            stateTable.Rows.Add(savedStrategyNum, savedConditionNum, Decimal.ToInt32(nud_StepNum.Value));
+            if (!isBindTablesCreated)
+            {
+                MessageBox.Show("Неполные данные. Сначала создайте связи между состояниями.");
+                return;
+            }
+            if (dataset.Tables.Contains(tablesNames.table_state))
+            {
+                dataset.Tables.Remove(tablesNames.table_state);
+            }
+            DataTable stateTable = new DataTable(tablesNames.table_state); //название технической таблицы state
+            stateTable.Columns.Add("resourceNum", typeof(int));
             dataset.Tables.Add(stateTable);
             dataset.WriteXml(saveName);
             MessageBox.Show("Файл сохранен");
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonLoad_Click(object sender, EventArgs e)
         {
             string openName = textBox_saveName.Text + ".xml";
             if (!File.Exists(openName))
@@ -123,28 +135,125 @@ namespace Lab1TPR_winForms
             }
             dataset = new DataSet();
             dataset.ReadXml(openName);
-            DataTable stateTable = dataset.Tables["state"];
-            nud_strategyNum.Value = Convert.ToDecimal(stateTable.Rows[0]["strategyNum"]);
-            savedStrategyNum = Int32.Parse(stateTable.Rows[0]["strategyNum"].ToString());
-            nud_conditionNum.Value = Convert.ToDecimal(stateTable.Rows[0]["conditionNum"]);
-            savedConditionNum = Int32.Parse(stateTable.Rows[0]["conditionNum"].ToString());
-            nud_StepNum.Value = Convert.ToDecimal(stateTable.Rows[0]["stepNum"]);
+            DataTable stateTable = dataset.Tables[tablesNames.table_state];
+            nud_resourceNum.Value = Convert.ToDecimal(stateTable.Rows[0]["resourceNum"]);
+            savedResourceNum = Int32.Parse(stateTable.Rows[0]["resourceNum"].ToString());
             MessageBox.Show("Файл загружен");
-            datasetCreated = true;
+            isDatasetCreated = true;
 
         }
 
         private void button_StartModelling_Click(object sender, EventArgs e)
         {
-            //if
             calculator.ChangeDS(dataset);
             calculator.ChangeIterations(Decimal.ToInt32(nud_StepNum.Value));
             DataTable result = calculator.Calculate();
-            using (Form3 form2 = new Form3(result))
+            using (Form3 form3 = new Form3(result))
             {
-                form2.ShowDialog();
+                form3.ShowDialog();
+            }
+        }
+
+        private void button_EditForm4_Click(object sender, EventArgs e)
+        {
+            if (!isDatasetCreated)
+            {
+                MessageBox.Show("Ошибка - Списки событий не созданы.\nНеобходимо сначала создать списки Инициирующих, Промежуточных и Конечных событий.");
+                return;
+            }
+            bool isNeedToCreateBindTables = false;
+            if (!isBindTablesCreated)
+            {
+                isNeedToCreateBindTables = true;
+            }
+            else
+            {
+                if (savedResourceNum != Decimal.ToInt32(nud_resourceNum.Value))
+                {
+                    DialogResult result = MessageBox.Show("В кеше уже есть сохраненные списки. \nДа - загрузить их из кеша.\nНет - Создать новые списки", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        nud_resourceNum.Value = Convert.ToDecimal(savedResourceNum);
+                        isNeedToCreateBindTables = false;
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        isNeedToCreateBindTables = false;
+                        MessageBox.Show("Для того чтобы создать новые списки нажмите на кнопку Редактировать списки");
+                    }
+                }
+            }
+
+
+            if (isNeedToCreateBindTables)
+            {
+                int resourceNum = Decimal.ToInt32(nud_resourceNum.Value);
+                if (dataset.Tables.Contains(tablesNames.table_S_IP))
+                {
+                    dataset.Tables.Remove(tablesNames.table_S_IP);
+                }
+                if (dataset.Tables.Contains(tablesNames.table_S_PK))
+                {
+                    dataset.Tables.Remove(tablesNames.table_S_PK);
+                }
+
+                savedResourceNum = resourceNum;
+                for (int i = 1; i <= resourceNum; i++)
+                {
+                    int I_num = dataset.Tables[tablesNames.table_I + i.ToString()].Rows.Count;
+                    int P_num = dataset.Tables[tablesNames.table_P + i.ToString()].Rows.Count;
+                    int K_num = dataset.Tables[tablesNames.table_K + i.ToString()].Rows.Count;
+                    DataTable S_IP = new DataTable(tablesNames.table_S_IP + i.ToString()); //таблица связей от инициирующих к промежуточным
+                    for(int j = 1; j <= P_num; j++)
+                    {
+                        S_IP.Columns.Add(tablesNames.table_P + j.ToString());
+                    }
+                    for (int j = 1; j <= I_num; j++)
+                    {
+                        S_IP.Rows.Add("");
+                    }
+
+                    DataTable S_PK = new DataTable(tablesNames.table_S_PK + i.ToString()); //таблица связей от инициирующих к промежуточным
+                    for (int j = 1; j <= K_num; j++)
+                    {
+                        S_PK.Columns.Add(tablesNames.table_K + j.ToString());
+                    }
+                    for (int j = 1; j <= P_num; j++)
+                    {
+                        S_PK.Rows.Add("");
+                    }
+
+                    dataset.Tables.Add(S_IP);
+                    dataset.Tables.Add(S_PK);
+                }
+                isBindTablesCreated = true;
+            }
+
+
+            using (Form4 form4 = new Form4(dataset, savedResourceNum)) //открываем Form4 чтобы редактировать связи событий
+            {
+                if (form4.ShowDialog() == DialogResult.OK)
+                {
+                    dataset = form4.datasetTemp;
+                }
 
             }
         }
+    }
+
+    static public class tablesNames
+    {
+        //I - table for исходные состояния
+        //P - table for промежуточные состояния
+        //K - table for конечные состояния
+        //S_IP - table for связи состояний P от I
+        //S_PK - table for связи состояний K от P
+        //state - техническая таблица (используется для сохранения данных на Form1)
+        public const String table_I = "I";
+        public const String table_P = "P";
+        public const String table_K = "K";
+        public const String table_S_IP = "S_IP";
+        public const String table_S_PK = "S_PK";
+        public const String table_state = "state";
     }
 }
