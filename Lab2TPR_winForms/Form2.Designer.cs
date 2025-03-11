@@ -46,7 +46,7 @@
             // label_table_I
             // 
             label_table_I.AutoSize = true;
-            label_table_I.Location = new Point(60, 41);
+            label_table_I.Location = new Point(38, 13);
             label_table_I.Name = "label_table_I";
             label_table_I.Size = new Size(191, 15);
             label_table_I.TabIndex = 0;
@@ -56,12 +56,12 @@
             // 
             dataGridView_table_I.AllowUserToDeleteRows = false;
             dataGridView_table_I.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView_table_I.Location = new Point(60, 58);
+            dataGridView_table_I.Location = new Point(38, 51);
             dataGridView_table_I.Margin = new Padding(3, 2, 3, 2);
             dataGridView_table_I.Name = "dataGridView_table_I";
             dataGridView_table_I.RowHeadersWidth = 51;
             dataGridView_table_I.RowTemplate.Height = 29;
-            dataGridView_table_I.Size = new Size(659, 243);
+            dataGridView_table_I.Size = new Size(623, 204);
             dataGridView_table_I.TabIndex = 1;
             dataGridView_table_I.RowsAdded += dataGridView_table_I_RowsAdded;
             dataGridView_table_I.SelectionChanged += dataGridView_table_I_SelectionChanged;
@@ -70,19 +70,19 @@
             // 
             dataGridView_table_P.AllowUserToDeleteRows = false;
             dataGridView_table_P.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView_table_P.Location = new Point(60, 343);
+            dataGridView_table_P.Location = new Point(38, 274);
             dataGridView_table_P.Margin = new Padding(3, 2, 3, 2);
             dataGridView_table_P.Name = "dataGridView_table_P";
             dataGridView_table_P.RowHeadersWidth = 51;
             dataGridView_table_P.RowTemplate.Height = 29;
-            dataGridView_table_P.Size = new Size(659, 243);
+            dataGridView_table_P.Size = new Size(623, 196);
             dataGridView_table_P.TabIndex = 2;
             dataGridView_table_P.RowsAdded += dataGridView_table_P_RowsAdded;
             dataGridView_table_P.SelectionChanged += dataGridView_table_P_SelectionChanged;
             // 
             // numericUpDown_tableID
             // 
-            numericUpDown_tableID.Location = new Point(557, 20);
+            numericUpDown_tableID.Location = new Point(566, 11);
             numericUpDown_tableID.Margin = new Padding(3, 2, 3, 2);
             numericUpDown_tableID.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown_tableID.Name = "numericUpDown_tableID";
@@ -93,7 +93,7 @@
             // 
             // button_SaveChanges
             // 
-            button_SaveChanges.Location = new Point(751, 905);
+            button_SaveChanges.Location = new Point(730, 448);
             button_SaveChanges.Margin = new Padding(3, 2, 3, 2);
             button_SaveChanges.Name = "button_SaveChanges";
             button_SaveChanges.Size = new Size(176, 22);
@@ -105,7 +105,7 @@
             // label_table_P
             // 
             label_table_P.AutoSize = true;
-            label_table_P.Location = new Point(60, 326);
+            label_table_P.Location = new Point(38, 257);
             label_table_P.Name = "label_table_P";
             label_table_P.Size = new Size(229, 15);
             label_table_P.TabIndex = 5;
@@ -127,12 +127,12 @@
             // 
             dataGridView_table_K.AllowUserToDeleteRows = false;
             dataGridView_table_K.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView_table_K.Location = new Point(60, 635);
+            dataGridView_table_K.Location = new Point(38, 489);
             dataGridView_table_K.Margin = new Padding(3, 2, 3, 2);
             dataGridView_table_K.Name = "dataGridView_table_K";
             dataGridView_table_K.RowHeadersWidth = 51;
             dataGridView_table_K.RowTemplate.Height = 29;
-            dataGridView_table_K.Size = new Size(659, 243);
+            dataGridView_table_K.Size = new Size(623, 184);
             dataGridView_table_K.TabIndex = 7;
             dataGridView_table_K.RowsAdded += dataGridView_table_K_RowsAdded;
             dataGridView_table_K.SelectionChanged += dataGridView_table_K_SelectionChanged;
@@ -140,7 +140,7 @@
             // label_table_K
             // 
             label_table_K.AutoSize = true;
-            label_table_K.Location = new Point(60, 608);
+            label_table_K.Location = new Point(38, 472);
             label_table_K.Name = "label_table_K";
             label_table_K.Size = new Size(190, 15);
             label_table_K.TabIndex = 8;
