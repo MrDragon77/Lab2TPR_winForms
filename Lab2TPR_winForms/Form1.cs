@@ -64,12 +64,12 @@ namespace Lab2TPR_winForms
                     I.Rows.Add("", "");
 
                     DataTable P = new DataTable(tablesNames.table_P + i.ToString()); //таблица промежуточных событий
-                    P.Columns.Add("Название"); //колонка 1 для названия инициирующего события
+                    P.Columns.Add("Название"); //колонка 1 для названия промежуточного события
                     P.Rows.Add("");
 
                     DataTable K = new DataTable(tablesNames.table_K + i.ToString()); //таблица конечных событий
-                    K.Columns.Add("Название"); //колонка 1 для названия инициирующего события
-                    K.Columns.Add("Потери"); //колонка 2 для вероятности возникновения инициирующего события
+                    K.Columns.Add("Название"); //колонка 1 для названия конечного события
+                    K.Columns.Add("Потери"); //колонка 2 для потерь конечного события
                     K.Rows.Add("", "");
 
                     dataset.Tables.Add(I);
@@ -147,10 +147,10 @@ namespace Lab2TPR_winForms
         private void button_StartModelling_Click(object sender, EventArgs e)
         {
             calculator.ChangeDS(dataset);
-           // DataTable result = calculator.Calculate();
-           // using (Form3 form3 = new Form3(result))
+            DataTable result = calculator.Calculate(Convert.ToInt32(nud_resourceNum.Value));
+            using (Form3 form3 = new Form3(result))
             {
-              // form3.ShowDialog();
+                form3.ShowDialog();
             }
         }
 
