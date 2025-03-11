@@ -120,6 +120,7 @@ namespace Lab2TPR_winForms
             }
             DataTable stateTable = new DataTable(tablesNames.table_state); //название технической таблицы state
             stateTable.Columns.Add("resourceNum", typeof(int));
+            stateTable.Rows.Add(savedResourceNum);
             dataset.Tables.Add(stateTable);
             dataset.WriteXml(saveName);
             MessageBox.Show("Файл сохранен");
@@ -187,17 +188,17 @@ namespace Lab2TPR_winForms
             if (isNeedToCreateBindTables)
             {
                 int resourceNum = Decimal.ToInt32(nud_resourceNum.Value);
-                for(int i = 1; i <= resourceNum; i++)
-                {
-                    if (dataset.Tables.Contains(tablesNames.table_S_IP + i.ToString()))
-                    {
-                        dataset.Tables.Remove(tablesNames.table_S_IP + i.ToString());
-                    }
-                    if (dataset.Tables.Contains(tablesNames.table_S_PK + i.ToString()))
-                    {
-                        dataset.Tables.Remove(tablesNames.table_S_PK + i.ToString());
-                    }
-                }
+                //for(int i = 1; i <= resourceNum; i++)
+                //{
+                //    if (dataset.Tables.Contains(tablesNames.table_S_IP + i.ToString()))
+                //    {
+                //        dataset.Tables.Remove(tablesNames.table_S_IP + i.ToString());
+                //    }
+                //    if (dataset.Tables.Contains(tablesNames.table_S_PK + i.ToString()))
+                //    {
+                //        dataset.Tables.Remove(tablesNames.table_S_PK + i.ToString());
+                //    }
+                //}
 
 
                 savedResourceNum = resourceNum;
@@ -206,22 +207,43 @@ namespace Lab2TPR_winForms
                     int I_num = dataset.Tables[tablesNames.table_I + i.ToString()].Rows.Count;
                     int P_num = dataset.Tables[tablesNames.table_P + i.ToString()].Rows.Count;
                     int K_num = dataset.Tables[tablesNames.table_K + i.ToString()].Rows.Count;
+                    int S_IP_oldRows = 0;
+                    int S_IP_oldCols = 0;
                     DataTable S_IP = new DataTable(tablesNames.table_S_IP + i.ToString()); //таблица связей от инициирующих к промежуточным
-                    for(int j = 1; j <= P_num; j++)
+                    if (dataset.Tables.Contains(tablesNames.table_S_IP + i.ToString()))
                     {
-                        S_IP.Columns.Add(tablesNames.table_P + j.ToString());
+                        S_IP_oldRows = dataset.Tables[tablesNames.table_S_IP + i.ToString()].Rows.Count;
+                        S_IP_oldCols = dataset.Tables[tablesNames.table_S_IP + i.ToString()].Columns.Count;
+                        S_IP = dataset.Tables[tablesNames.table_S_IP + i.ToString()];
+                        dataset.Tables.Remove(tablesNames.table_S_IP + i.ToString());
                     }
-                    for (int j = 1; j <= I_num; j++)
+                    int S_PK_oldRows = 0;
+                    int S_PK_oldCols = 0;
+                    DataTable S_PK = new DataTable(tablesNames.table_S_PK + i.ToString()); //таблица связей от инициирующих к промежуточным
+                    if (dataset.Tables.Contains(tablesNames.table_S_PK + i.ToString()))
+                    {
+                        S_PK_oldRows = dataset.Tables[tablesNames.table_S_PK + i.ToString()].Rows.Count;
+                        S_PK_oldCols = dataset.Tables[tablesNames.table_S_PK + i.ToString()].Columns.Count;
+                        S_PK = dataset.Tables[tablesNames.table_S_PK + i.ToString()];
+                        dataset.Tables.Remove(tablesNames.table_S_PK + i.ToString());
+                    }
+
+                    
+                    for(int j = S_IP_oldCols; j < P_num; j++)
+                    {
+                        S_IP.Columns.Add(tablesNames.table_P + (j+1).ToString());
+                    }
+                    for (int j = S_IP_oldRows; j < I_num; j++)
                     {
                         S_IP.Rows.Add("");
                     }
 
-                    DataTable S_PK = new DataTable(tablesNames.table_S_PK + i.ToString()); //таблица связей от инициирующих к промежуточным
-                    for (int j = 1; j <= K_num; j++)
+                    
+                    for (int j = S_PK_oldCols; j < K_num; j++)
                     {
-                        S_PK.Columns.Add(tablesNames.table_K + j.ToString());
+                        S_PK.Columns.Add(tablesNames.table_K + (j+1).ToString());
                     }
-                    for (int j = 1; j <= P_num; j++)
+                    for (int j = S_PK_oldRows; j < P_num; j++)
                     {
                         S_PK.Rows.Add("");
                     }
