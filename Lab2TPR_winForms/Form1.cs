@@ -17,7 +17,7 @@ namespace Lab2TPR_winForms
         {
             InitializeComponent();
             dataset = new DataSet();
-            calculator = new Calculator(dataset, 1);
+            calculator = new Calculator(dataset);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -146,11 +146,10 @@ namespace Lab2TPR_winForms
         private void button_StartModelling_Click(object sender, EventArgs e)
         {
             calculator.ChangeDS(dataset);
-            calculator.ChangeIterations(Decimal.ToInt32(nud_StepNum.Value));
-            DataTable result = calculator.Calculate();
-            using (Form3 form3 = new Form3(result))
+           // DataTable result = calculator.Calculate();
+           // using (Form3 form3 = new Form3(result))
             {
-                form3.ShowDialog();
+              // form3.ShowDialog();
             }
         }
 
