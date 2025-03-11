@@ -63,6 +63,7 @@
             dataGridView_table_I.RowTemplate.Height = 29;
             dataGridView_table_I.Size = new Size(659, 243);
             dataGridView_table_I.TabIndex = 1;
+            dataGridView_table_I.RowsAdded += dataGridView_table_I_RowsAdded;
             dataGridView_table_I.SelectionChanged += dataGridView_table_I_SelectionChanged;
             // 
             // dataGridView_table_P
@@ -76,6 +77,7 @@
             dataGridView_table_P.RowTemplate.Height = 29;
             dataGridView_table_P.Size = new Size(659, 243);
             dataGridView_table_P.TabIndex = 2;
+            dataGridView_table_P.RowsAdded += dataGridView_table_P_RowsAdded;
             dataGridView_table_P.SelectionChanged += dataGridView_table_P_SelectionChanged;
             // 
             // numericUpDown_tableID
@@ -132,6 +134,7 @@
             dataGridView_table_K.RowTemplate.Height = 29;
             dataGridView_table_K.Size = new Size(659, 243);
             dataGridView_table_K.TabIndex = 7;
+            dataGridView_table_K.RowsAdded += dataGridView_table_K_RowsAdded;
             dataGridView_table_K.SelectionChanged += dataGridView_table_K_SelectionChanged;
             // 
             // label_table_K

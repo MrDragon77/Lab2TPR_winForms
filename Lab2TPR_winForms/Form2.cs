@@ -54,28 +54,16 @@ namespace Lab2TPR_winForms
 
         private void dataGridView_table_I_SelectionChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView_table_I.Rows.Count; i++)
-            {
-                dataGridView_table_I.Rows[i].HeaderCell.Value = "И" + (i+1).ToString();
-            }
             dataGridView_table_I.Update();
         }
 
         private void dataGridView_table_P_SelectionChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView_table_P.Rows.Count; i++)
-            {
-                dataGridView_table_P.Rows[i].HeaderCell.Value = "П" + (i+1).ToString();
-            }
             dataGridView_table_P.Update();
         }
 
         private void dataGridView_table_K_SelectionChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView_table_K.Rows.Count; i++)
-            {
-                dataGridView_table_K.Rows[i].HeaderCell.Value = "К" + (i+1).ToString();
-            }
             dataGridView_table_K.Update();
         }
 
@@ -88,6 +76,28 @@ namespace Lab2TPR_winForms
             GraphForm.ShowDialog();
         }
 
+        private void dataGridView_table_I_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            for (int i = 0; i < dataGridView_table_I.Rows.Count; i++)
+            {
+                dataGridView_table_I.Rows[i].HeaderCell.Value = "И" + (i + 1).ToString();
+            }
+        }
 
+        private void dataGridView_table_P_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            for (int i = 0; i < dataGridView_table_P.Rows.Count; i++)
+            {
+                dataGridView_table_P.Rows[i].HeaderCell.Value = "П" + (i + 1).ToString();
+            }
+        }
+
+        private void dataGridView_table_K_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            for (int i = 0; i < dataGridView_table_K.Rows.Count; i++)
+            {
+                dataGridView_table_K.Rows[i].HeaderCell.Value = "К" + (i + 1).ToString();
+            }
+        }
     }
 }

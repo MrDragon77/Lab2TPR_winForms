@@ -50,6 +50,16 @@ namespace Lab2TPR_winForms
 
         private void dataGridView_table_S_IP_SelectionChanged(object sender, EventArgs e)
         {
+            dataGridView_table_S_IP.Update();
+        }
+
+        private void dataGridView_table_S_PK_SelectionChanged(object sender, EventArgs e)
+        {
+            dataGridView_table_S_PK.Update();
+        }
+
+        private void dataGridView_table_S_IP_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
             for (int i = 0; i < dataGridView_table_S_IP.ColumnCount; i++)
             {
                 dataGridView_table_S_IP.Columns[i].HeaderText = "П" + (i + 1).ToString();
@@ -58,10 +68,9 @@ namespace Lab2TPR_winForms
             {
                 dataGridView_table_S_IP.Rows[i].HeaderCell.Value = "И" + (i + 1).ToString();
             }
-            dataGridView_table_S_IP.Update();
         }
 
-        private void dataGridView_table_S_PK_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView_table_S_PK_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             for (int i = 0; i < dataGridView_table_S_PK.ColumnCount; i++)
             {
@@ -71,7 +80,6 @@ namespace Lab2TPR_winForms
             {
                 dataGridView_table_S_PK.Rows[i].HeaderCell.Value = "П" + (i + 1).ToString();
             }
-            dataGridView_table_S_PK.Update();
         }
     }
 }

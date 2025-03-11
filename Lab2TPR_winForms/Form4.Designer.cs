@@ -41,6 +41,7 @@
             // 
             // dataGridView_table_S_IP
             // 
+            dataGridView_table_S_IP.AllowUserToAddRows = false;
             dataGridView_table_S_IP.AllowUserToDeleteRows = false;
             dataGridView_table_S_IP.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView_table_S_IP.Location = new Point(52, 52);
@@ -50,6 +51,7 @@
             dataGridView_table_S_IP.RowTemplate.Height = 29;
             dataGridView_table_S_IP.Size = new Size(659, 243);
             dataGridView_table_S_IP.TabIndex = 2;
+            dataGridView_table_S_IP.RowsAdded += dataGridView_table_S_IP_RowsAdded;
             dataGridView_table_S_IP.SelectionChanged += dataGridView_table_S_IP_SelectionChanged;
             // 
             // label_table_S_PI
@@ -72,6 +74,7 @@
             // 
             // dataGridView_table_S_PK
             // 
+            dataGridView_table_S_PK.AllowUserToAddRows = false;
             dataGridView_table_S_PK.AllowUserToDeleteRows = false;
             dataGridView_table_S_PK.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView_table_S_PK.Location = new Point(52, 328);
@@ -81,6 +84,7 @@
             dataGridView_table_S_PK.RowTemplate.Height = 29;
             dataGridView_table_S_PK.Size = new Size(659, 243);
             dataGridView_table_S_PK.TabIndex = 4;
+            dataGridView_table_S_PK.RowsAdded += dataGridView_table_S_PK_RowsAdded;
             dataGridView_table_S_PK.SelectionChanged += dataGridView_table_S_PK_SelectionChanged;
             // 
             // numericUpDown_tableID

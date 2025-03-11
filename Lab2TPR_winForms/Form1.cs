@@ -188,14 +188,18 @@ namespace Lab2TPR_winForms
             if (isNeedToCreateBindTables)
             {
                 int resourceNum = Decimal.ToInt32(nud_resourceNum.Value);
-                if (dataset.Tables.Contains(tablesNames.table_S_IP))
+                for(int i = 1; i <= resourceNum; i++)
                 {
-                    dataset.Tables.Remove(tablesNames.table_S_IP);
+                    if (dataset.Tables.Contains(tablesNames.table_S_IP + i.ToString()))
+                    {
+                        dataset.Tables.Remove(tablesNames.table_S_IP + i.ToString());
+                    }
+                    if (dataset.Tables.Contains(tablesNames.table_S_PK + i.ToString()))
+                    {
+                        dataset.Tables.Remove(tablesNames.table_S_PK + i.ToString());
+                    }
                 }
-                if (dataset.Tables.Contains(tablesNames.table_S_PK))
-                {
-                    dataset.Tables.Remove(tablesNames.table_S_PK);
-                }
+
 
                 savedResourceNum = resourceNum;
                 for (int i = 1; i <= resourceNum; i++)
